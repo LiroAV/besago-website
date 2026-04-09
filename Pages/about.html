@@ -77,8 +77,11 @@ html[data-theme="light"] .mob-icon-moon{display:none;}
 /* PAGE */
 .page-wrap{padding-top:70px;}
 
+/* SCROLL PROGRESS BAR */
+#scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:10000;width:0%;pointer-events:none;transition:background .5s;}
+
 /* HERO */
-.ab-hero{padding:8rem 3.5rem 6rem;border-bottom:1px solid var(--border);}
+.ab-hero{padding:8rem 3.5rem 6rem;border-bottom:1px solid var(--border);overflow:hidden;}
 .ab-eye{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.4rem;transition:color .5s;}
 .ab-eye::before{content:'';width:18px;height:1px;background:var(--accent);}
 .ab-title{font-family:var(--hf);font-weight:800;font-size:clamp(3rem,6vw,5.5rem);line-height:1.0;letter-spacing:-.03em;color:var(--text);max-width:760px;margin-bottom:1.8rem;transition:color .5s,font-family .5s;}
@@ -88,12 +91,24 @@ html[data-theme="light"] .mob-icon-moon{display:none;}
 .ab-stat-val{font-family:var(--hf);font-weight:800;font-size:2.8rem;letter-spacing:-.04em;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;transition:font-family .5s;}
 .ab-stat-lbl{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.3rem;}
 
+/* MASKED WORD REVEAL */
+.word-mask{display:inline-block;overflow:hidden;vertical-align:bottom;line-height:1.15;}
+.word-inner{display:inline-block;transform:translateY(105%);transition:transform .75s cubic-bezier(.22,1,.36,1);}
+.word-mask.vis .word-inner{transform:translateY(0);}
+
 [data-r]{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
 [data-r].vis{opacity:1;transform:translateY(0);}
 [data-r][data-d="1"]{transition-delay:.1s;}
 [data-r][data-d="2"]{transition-delay:.2s;}
 [data-r][data-d="3"]{transition-delay:.3s;}
 [data-r][data-d="4"]{transition-delay:.4s;}
+
+/* MARQUEE STRIP */
+.marquee-strip{overflow:hidden;padding:1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);transition:background .5s;}
+.marquee-track{display:flex;gap:0;width:max-content;animation:marquee 28s linear infinite;}
+.marquee-track:hover{animation-play-state:paused;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.marquee-item{font-family:var(--hf);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);white-space:nowrap;padding:0 2.5rem;border-right:1px solid var(--border);transition:color .5s;}
 
 /* SECTION CHROME */
 .sec-wrap{background:var(--bg);transition:background .5s;}
@@ -106,8 +121,13 @@ html[data-theme="light"] .mob-icon-moon{display:none;}
 .sec-body{font-size:.97rem;font-weight:300;color:var(--muted);line-height:1.85;max-width:660px;transition:color .5s;}
 
 /* VALUES */
-.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3.5rem;}
-.val-card{padding:2.2rem 2rem;border:1px solid var(--border);background:var(--card-bg);position:relative;overflow:hidden;transition:border-color .3s,background .3s;}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3.5rem;perspective:1000px;}
+.val-card{padding:2.2rem 2rem;border:1px solid var(--border);background:var(--card-bg);position:relative;overflow:hidden;
+  transform:perspective(800px) rotateX(14deg) translateY(36px);opacity:0;
+  transition:transform .75s cubic-bezier(.22,1,.36,1),opacity .55s,border-color .3s,background .3s;}
+.val-card.vis{transform:perspective(800px) rotateX(0deg) translateY(0);opacity:1;}
+.val-card:nth-child(2){transition-delay:.12s;}
+.val-card:nth-child(3){transition-delay:.24s;}
 .val-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transition:transform .4s cubic-bezier(.22,1,.36,1);}
 .val-card:hover::before{transform:scaleX(1);}
 .val-num{font-family:var(--hf);font-size:.6rem;font-weight:700;letter-spacing:.2em;color:var(--accent);opacity:.6;margin-bottom:.8rem;}
@@ -115,8 +135,13 @@ html[data-theme="light"] .mob-icon-moon{display:none;}
 .val-body{font-size:.85rem;color:var(--muted);line-height:1.75;font-weight:300;}
 
 /* APPROACH */
-.approach-list{display:flex;flex-direction:column;gap:0;margin-top:3rem;max-width:680px;}
-.ap-item{display:flex;gap:1.8rem;padding:1.8rem 0;border-bottom:1px solid var(--border);}
+.approach-list{display:flex;flex-direction:column;gap:0;margin-top:3rem;max-width:680px;position:relative;}
+.approach-line{position:absolute;left:9px;top:0;width:1px;background:linear-gradient(to bottom,var(--accent),var(--accent2));height:0;transition:height .05s linear;pointer-events:none;}
+.ap-item{display:flex;gap:1.8rem;padding:1.8rem 0;border-bottom:1px solid var(--border);opacity:0;transform:translateX(-28px);transition:opacity .6s,transform .6s cubic-bezier(.22,1,.36,1);}
+.ap-item.vis{opacity:1;transform:translateX(0);}
+.ap-item:nth-child(2){transition-delay:.1s;}
+.ap-item:nth-child(3){transition-delay:.2s;}
+.ap-item:nth-child(4){transition-delay:.3s;}
 .ap-item:first-child{border-top:1px solid var(--border);}
 .ap-num{font-family:var(--hf);font-size:.58rem;font-weight:700;letter-spacing:.2em;color:var(--accent);width:28px;flex-shrink:0;padding-top:.15rem;}
 .ap-content{}
@@ -154,6 +179,7 @@ html[data-theme="light"] .mob-icon-moon{display:none;}
 </style>
 </head>
 <body>
+<div id="scroll-bar"></div>
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 
@@ -210,7 +236,7 @@ html[data-theme="light"] .mob-icon-moon{display:none;}
 <!-- HERO -->
 <section class="ab-hero">
   <p class="ab-eye" data-r>Besago · Über uns</p>
-  <h1 class="ab-title" data-r data-d="1">Wir bauen digitale<br>Auftritte, die <em>wirken.</em></h1>
+  <h1 class="ab-title" data-split>Wir bauen digitale<br>Auftritte, die <em>wirken.</em></h1>
   <p class="ab-sub" data-r data-d="2">Besago ist eine Schweizer Digitalagentur mit Sitz in Zürich. Wir verbinden strategisches Denken, sauberes Design und solide Technik zu Ergebnissen, die messbar sind.</p>
   <div class="ab-stats" data-r data-d="3">
     <div>
@@ -236,17 +262,24 @@ html[data-theme="light"] .mob-icon-moon{display:none;}
 <div class="sec-wrap">
 <section class="sec">
   <p class="sec-eye" data-r>Unsere Geschichte</p>
-  <h2 class="sec-title" data-r data-d="1">Angefangen mit einer<br><em>einfachen Überzeugung.</em></h2>
+  <h2 class="sec-title" data-split>Angefangen mit einer<br><em>einfachen Überzeugung.</em></h2>
   <p class="sec-body" data-r data-d="2">Besago wurde gegründet, weil wir festgestellt haben, dass viele Schweizer Unternehmen einen digitalen Auftritt haben — aber keinen, der wirklich für sie arbeitet. Zu viele Websites existieren nur, um vorhanden zu sein. Zu viele Kampagnen verbrennen Budget ohne messbare Wirkung.</p>
   <p class="sec-body" data-r data-d="3" style="margin-top:1.2rem;">Unser Ansatz ist anders: Wir starten mit der Frage, was Ihr Unternehmen wirklich braucht — und bauen dann rückwärts. Kein Overengineering, keine überflüssigen Features. Nur das, was funktioniert.</p>
 </section>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item">Webdesign</span><span class="marquee-item">Google Ads</span><span class="marquee-item">Social Media</span><span class="marquee-item">Digital Solutions</span><span class="marquee-item">SEO</span><span class="marquee-item">Zürich</span><span class="marquee-item">Schweiz</span><span class="marquee-item">Strategie</span><span class="marquee-item">Design</span><span class="marquee-item">Technik</span><span class="marquee-item">Webdesign</span><span class="marquee-item">Google Ads</span><span class="marquee-item">Social Media</span><span class="marquee-item">Digital Solutions</span><span class="marquee-item">SEO</span><span class="marquee-item">Zürich</span><span class="marquee-item">Schweiz</span><span class="marquee-item">Strategie</span><span class="marquee-item">Design</span><span class="marquee-item">Technik</span>
+  </div>
 </div>
 
 <!-- VALUES -->
 <div class="sec-wrap">
 <section class="sec">
   <p class="sec-eye" data-r>Unsere Werte</p>
-  <h2 class="sec-title" data-r data-d="1">Was uns <em>antreibt.</em></h2>
+  <h2 class="sec-title" data-split>Was uns <em>antreibt.</em></h2>
   <div class="values-grid">
     <div class="val-card" data-r data-d="1">
       <div class="val-num">01</div>
@@ -271,8 +304,8 @@ html[data-theme="light"] .mob-icon-moon{display:none;}
 <div class="sec-wrap">
 <section class="sec">
   <p class="sec-eye" data-r>Unser Prozess</p>
-  <h2 class="sec-title" data-r data-d="1">Wie wir <em>arbeiten.</em></h2>
-  <div class="approach-list">
+  <h2 class="sec-title" data-split>Wie wir <em>arbeiten.</em></h2>
+  <div class="approach-list" id="approachList"><div class="approach-line" id="approachLine"></div>
     <div class="ap-item" data-r data-d="1">
       <div class="ap-num">01</div>
       <div class="ap-content">
@@ -383,9 +416,97 @@ mob.querySelectorAll('.mob-nav-links a').forEach(a=>a.addEventListener('click',(
 document.getElementById('mobThemeBtn').addEventListener('click',function(){var t=html.dataset.theme==='dark'?'light':'dark';html.dataset.theme=t;localStorage.setItem('bsg-theme',t);});
 document.getElementById('mobCycleBtn').addEventListener('click',function(){stIdx=(stIdx+1)%styleThemes.length;var st=styleThemes[stIdx].id;html.dataset.st=st;localStorage.setItem('bsg-style',st);_loadFont(st);});
 
-/* SCROLL REVEAL */
-const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.12});
-document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
+/* SCROLL PROGRESS BAR */
+const scrollBar = document.getElementById('scroll-bar');
+window.addEventListener('scroll', () => {
+  const pct = scrollY / (document.body.scrollHeight - innerHeight) * 100;
+  scrollBar.style.width = Math.min(pct, 100) + '%';
+}, {passive: true});
+
+/* SPLIT TEXT — word-by-word masked reveal */
+document.querySelectorAll('[data-split]').forEach(el => {
+  /* Collect child nodes preserving <br> and <em> */
+  const nodes = [...el.childNodes];
+  el.innerHTML = '';
+  nodes.forEach(node => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      node.textContent.split(/(\s+)/).forEach(part => {
+        if (!part.trim()) { el.appendChild(document.createTextNode(part)); return; }
+        const mask = document.createElement('span');
+        mask.className = 'word-mask';
+        const inner = document.createElement('span');
+        inner.className = 'word-inner';
+        inner.textContent = part;
+        mask.appendChild(inner);
+        el.appendChild(mask);
+      });
+    } else if (node.nodeName === 'BR') {
+      el.appendChild(document.createElement('br'));
+    } else if (node.nodeName === 'EM') {
+      const words = node.textContent.split(/(\s+)/);
+      words.forEach(part => {
+        if (!part.trim()) { el.appendChild(document.createTextNode(part)); return; }
+        const mask = document.createElement('span');
+        mask.className = 'word-mask';
+        const inner = document.createElement('span');
+        inner.className = 'word-inner';
+        inner.style.cssText = 'background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;';
+        inner.textContent = part;
+        mask.appendChild(inner);
+        el.appendChild(mask);
+      });
+    } else {
+      el.appendChild(node);
+    }
+  });
+  /* Stagger each word-mask */
+  el.querySelectorAll('.word-mask').forEach((m, i) => {
+    m.querySelector('.word-inner').style.transitionDelay = (i * 55) + 'ms';
+  });
+});
+
+/* SCROLL REVEAL — [data-r] + val-card + ap-item + word-masks */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); ro.unobserve(e.target); } });
+}, {threshold: .1});
+document.querySelectorAll('[data-r], .val-card, .ap-item').forEach(el => ro.observe(el));
+
+const splitObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.word-mask').forEach(m => m.classList.add('vis'));
+      splitObs.unobserve(e.target);
+    }
+  });
+}, {threshold: .15});
+document.querySelectorAll('[data-split]').forEach(el => splitObs.observe(el));
+
+/* APPROACH TIMELINE LINE — draw as list scrolls into view */
+const approachList = document.getElementById('approachList');
+const approachLine = document.getElementById('approachLine');
+if (approachList && approachLine) {
+  function updateLine() {
+    const rect = approachList.getBoundingClientRect();
+    const total = approachList.offsetHeight;
+    const visible = Math.max(0, Math.min(innerHeight - rect.top, total));
+    approachLine.style.height = Math.min(visible, total) + 'px';
+  }
+  window.addEventListener('scroll', updateLine, {passive: true});
+  updateLine();
+}
+
+/* PARALLAX HERO */
+const abHero = document.querySelector('.ab-hero');
+const abTitle = document.querySelector('.ab-title');
+const abSub = document.querySelector('.ab-sub');
+const abStats = document.querySelector('.ab-stats');
+function heroParallax() {
+  const y = scrollY;
+  if (abTitle) abTitle.style.transform = `translateY(${y * 0.18}px)`;
+  if (abSub) abSub.style.transform = `translateY(${y * 0.1}px)`;
+  if (abStats) abStats.style.transform = `translateY(${y * 0.06}px)`;
+}
+window.addEventListener('scroll', heroParallax, {passive: true});
 
 /* CURSOR */
 const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
