@@ -269,17 +269,17 @@ html[data-theme="light"] .mob-moon{display:none;}
 [data-d="3"]{transition-delay:.36s;}
 
 /* CONTAINER SCROLL */
-.cs-wrap{height:900px;display:flex;align-items:flex-start;justify-content:center;position:relative;padding:2rem;overflow:hidden;border-bottom:1px solid var(--border);}
-.cs-inner{width:100%;max-width:900px;position:sticky;top:80px;display:flex;flex-direction:column;align-items:center;perspective:1000px;}
+.cs-wrap{height:1400px;display:flex;justify-content:center;border-bottom:1px solid var(--border);}
+.cs-sticky{position:sticky;top:0;height:100vh;width:100%;max-width:960px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;perspective:1000px;}
 .cs-title{text-align:center;margin-bottom:2.5rem;will-change:transform;}
 .cs-eye{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:color .5s;}
 .cs-eye::before,.cs-eye::after{content:'';width:18px;height:1px;background:var(--accent);}
-.cs-heading{font-family:var(--hf);font-weight:800;font-size:clamp(1.8rem,4vw,3.4rem);letter-spacing:-.03em;color:var(--text);line-height:1.08;transition:color .5s,font-family .5s;}
+.cs-heading{font-family:var(--hf);font-weight:800;font-size:clamp(1.8rem,4vw,3.2rem);letter-spacing:-.03em;color:var(--text);line-height:1.08;transition:color .5s,font-family .5s;}
 .cs-heading em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.cs-card{width:100%;height:420px;border:2px solid var(--border);border-radius:24px;background:var(--bg2);overflow:hidden;will-change:transform;box-shadow:0 0 0 #0000004d,0 9px 20px #0000004a,0 37px 37px #00000042,0 84px 50px #00000026;transition:background .5s,border-color .5s;}
-.cs-card-inner{width:100%;height:100%;border-radius:18px;overflow:hidden;background:var(--card-bg);display:flex;align-items:stretch;}
+.cs-card{width:100%;height:min(42rem,56vh);border:2px solid var(--border);border-radius:28px;background:var(--bg2);overflow:hidden;will-change:transform;transform-origin:center top;box-shadow:0 0 0 #0000004d,0 9px 20px #0000004a,0 37px 37px #00000042,0 84px 50px #00000026,0 149px 60px #0000000a;transition:border-color .5s,background .5s;}
+.cs-card-inner{width:100%;height:100%;border-radius:22px;overflow:hidden;background:var(--card-bg);}
 .cs-browser{display:flex;flex-direction:column;width:100%;height:100%;}
-.cs-browser-bar{height:38px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:6px;flex-shrink:0;}
+.cs-browser-bar{height:38px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:6px;flex-shrink:0;transition:background .5s;}
 .cs-b-dot{width:9px;height:9px;border-radius:50%;}
 .cs-b-dot:nth-child(1){background:#ff5f57;opacity:.8;}
 .cs-b-dot:nth-child(2){background:#febc2e;opacity:.8;}
@@ -287,16 +287,16 @@ html[data-theme="light"] .mob-moon{display:none;}
 .cs-b-url{flex:1;height:20px;margin:0 14px;background:var(--card-bg2);border-radius:4px;display:flex;align-items:center;padding:0 10px;}
 .cs-b-url::before{content:'besago.ch';font-size:.6rem;letter-spacing:.06em;color:var(--muted);opacity:.6;}
 .cs-browser-body{flex:1;padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:14px;overflow:hidden;}
-.cs-mock-hero{grid-column:1/-1;background:color-mix(in srgb,var(--accent) 6%,var(--bg));border:1px solid var(--border);border-radius:8px;padding:22px;display:flex;flex-direction:column;gap:8px;}
+.cs-mock-hero{grid-column:1/-1;background:color-mix(in srgb,var(--accent) 6%,var(--bg));border:1px solid var(--border);border-radius:8px;padding:22px;display:flex;flex-direction:column;gap:8px;transition:background .5s;}
 .cs-mock-h1{height:14px;background:var(--text);opacity:.2;border-radius:3px;width:55%;}
 .cs-mock-h2{height:10px;background:var(--muted);opacity:.35;border-radius:3px;width:38%;}
-.cs-mock-btn{height:22px;width:90px;background:var(--accent);opacity:.55;border-radius:3px;margin-top:6px;}
+.cs-mock-btn{height:22px;width:90px;background:var(--accent);opacity:.55;border-radius:3px;margin-top:6px;transition:background .5s;}
 .cs-mock-card{background:var(--card-bg2);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:6px;}
 .cs-mock-line{height:7px;background:var(--border);border-radius:2px;}
 .cs-mock-line:nth-child(2){width:70%;}
 .cs-mock-line:nth-child(3){width:50%;opacity:.6;}
 .cs-mock-tag{height:16px;width:50px;background:color-mix(in srgb,var(--accent) 18%,transparent);border-radius:2px;margin-top:4px;}
-@media(max-width:640px){.cs-wrap{height:680px;}.cs-card{height:280px;}}
+@media(max-width:640px){.cs-wrap{height:900px;}.cs-card{height:min(28rem,50vh);}}
 </style>
 </head>
 <body>
@@ -367,7 +367,7 @@ html[data-theme="light"] .mob-moon{display:none;}
 
 <!-- CONTAINER SCROLL -->
 <div class="cs-wrap" id="csWrap">
-  <div class="cs-inner" id="csInner">
+  <div class="cs-sticky" id="csInner">
     <div class="cs-title" id="csTitle">
       <div class="cs-eye">Unsere Leistungen</div>
       <h2 class="cs-heading">Alles aus einer Hand —<br><em>digital. messbar. wirksam.</em></h2>
@@ -1247,29 +1247,32 @@ observePanel('svc-web');
 
 /* CONTAINER SCROLL ANIMATION */
 (function () {
-  const wrap = document.getElementById('csWrap');
-  const card = document.getElementById('csCard');
+  const wrap  = document.getElementById('csWrap');
+  const card  = document.getElementById('csCard');
   const title = document.getElementById('csTitle');
   if (!wrap || !card || !title) return;
 
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   function update() {
-    const rect = wrap.getBoundingClientRect();
-    const wrapH = wrap.offsetHeight;
-    /* progress: 0 when top of section hits bottom of viewport, 1 when bottom hits top */
+    const rect     = wrap.getBoundingClientRect();
+    const wrapH    = wrap.offsetHeight;
+    const isMobile = innerWidth <= 768;
+
+    /* scrollYProgress: 0 = wrap top at viewport top, 1 = wrap bottom at viewport bottom */
     const progress = Math.max(0, Math.min(1, -rect.top / (wrapH - innerHeight)));
 
-    const rotateX = lerp(20, 0, progress);       /* 20deg → 0deg */
-    const scale   = lerp(1.05, 1, progress);      /* slight zoom out */
-    const titleY  = lerp(0, -80, progress);       /* title drifts up */
+    /* Mirror framer-motion transforms exactly */
+    const rotateX  = lerp(20, 0, progress);
+    const scale    = lerp(isMobile ? 0.7 : 1.05, isMobile ? 0.9 : 1, progress);
+    const titleY   = lerp(0, -100, progress);
 
     card.style.transform  = `rotateX(${rotateX}deg) scale(${scale})`;
     title.style.transform = `translateY(${titleY}px)`;
-    title.style.opacity   = String(Math.min(1, lerp(0.4, 1, progress * 2)));
   }
 
   window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
   update();
 })();
 
