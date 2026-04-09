@@ -1210,7 +1210,12 @@ const revObs = new IntersectionObserver(entries => {
 function observePanel(id) { document.querySelectorAll('#' + id + ' [data-r]').forEach(el => revObs.observe(el)); }
 observePanel('svc-web');
 
-/* CONTAINER SCROLL — exact framer-motion useScroll({target}) port */
+/* CONTAINER SCROLL — exact framer-motion port
+   useScroll({target}) default offset: ["start start","end end"]
+   → progress=0 when element.top === viewport.top  (rect.top === 0)
+   → progress=1 when element.bottom === viewport.bottom (rect.top === innerHeight - wrapH)
+   => t = -rect.top / (wrapH - innerHeight)
+*/
 (function () {
   const wrap  = document.getElementById('csWrap');
   const card  = document.getElementById('csCard');
@@ -1223,18 +1228,18 @@ observePanel('svc-web');
     const rect     = wrap.getBoundingClientRect();
     const wrapH    = wrap.offsetHeight;
     const isMobile = innerWidth <= 768;
+    const range    = wrapH - innerHeight;
 
-    /* framer-motion useScroll({target}) definition:
-       scrollYProgress = 0 when element top == viewport bottom
-       scrollYProgress = 1 when element bottom == viewport top
-       => t = (innerHeight - rect.top) / (innerHeight + wrapH)          */
-    const t = Math.max(0, Math.min(1, (innerHeight - rect.top) / (innerHeight + wrapH)));
+    /* clamp to 0-1; range could be ≤0 on very tall viewports — clamp to 0.5 then */
+    const t = range > 10
+      ? Math.max(0, Math.min(1, -rect.top / range))
+      : 0.5;
 
-    /* useTransform(scrollYProgress, [0,1], [20, 0]) */
+    /* useTransform(scrollYProgress, [0, 1], [20, 0]) */
     const rotateX    = lerp(20, 0, t);
-    /* useTransform(scrollYProgress, [0,1], scaleDimensions()) */
+    /* useTransform(scrollYProgress, [0, 1], scaleDimensions()) */
     const scale      = lerp(isMobile ? 0.7 : 1.05, isMobile ? 0.9 : 1, t);
-    /* useTransform(scrollYProgress, [0,1], [0, -100]) */
+    /* useTransform(scrollYProgress, [0, 1], [0, -100]) */
     const translateY = lerp(0, -100, t);
 
     card.style.transform  = `rotateX(${rotateX}deg) scale(${scale})`;
